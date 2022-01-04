@@ -34,12 +34,22 @@ mongoose
 
 //Configs
 var corsOptions = {
-  origin: ["https://woc4-darshan-modi.herokuapp.com", "http://localhost:3001"],
+  origin: "http://localhost:3001",
+  credentials: true,
+  optionSuccessStatus: 200,
 };
 
 //enable cors
 app.use(cors(corsOptions));
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 // parse requests of content-type - application/json
 app.use(express.json());
 
