@@ -34,7 +34,7 @@ mongoose
 
 //Configs
 var corsOptions = {
-  origin: ["https://woc4-darshan-modi.herokuapp.com","http://localhost:3001"],
+  origin: ["https://woc4-darshan-modi.herokuapp.com", "http://localhost:3001"],
 };
 
 //enable cors
