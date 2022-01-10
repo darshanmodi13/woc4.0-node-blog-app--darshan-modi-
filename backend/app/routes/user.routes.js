@@ -11,7 +11,11 @@ router.use((req, res, next) => {
 });
 
 router.get("/", (req, res) => {
-  res.end();
+  res.send("User Routes");
+});
+
+router.get("/username", (req, res) => {
+  res.send(req.query);
 });
 
 module.exports = router;

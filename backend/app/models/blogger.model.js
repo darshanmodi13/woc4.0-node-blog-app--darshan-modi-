@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const userSchema = new mongoose.Schema({
+const bloggerSchema = new mongoose.Schema({
   first_name: {
     type: String,
     required: true,
@@ -32,16 +32,20 @@ const userSchema = new mongoose.Schema({
   },
   followers: [
     {
-      follower_id: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      follower_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blogger",
+      },
     },
   ],
   following: [
     {
-      following_id: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      following_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Blogger",
+      },
     },
   ],
 });
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("Blogger", bloggerSchema);

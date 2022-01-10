@@ -1,7 +1,7 @@
 const db = {};
 
 //Models
-db.USER = require("./user.model");
-db.POST = require("./post.model");
+db.Blogger = require("./blogger.model");
+db.Blog = require("./blog.model");
 
 module.exports = db;

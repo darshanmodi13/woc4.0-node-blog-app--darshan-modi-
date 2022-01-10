@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const postSchema = new mongoose.Schema({
+const blogSchema = new mongoose.Schema({
   comments: [
     {
       body: {
@@ -8,21 +8,33 @@ const postSchema = new mongoose.Schema({
       },
       commenter_id: {
         type: mongoose.Types.ObjectId,
-        ref: "User",
+        ref: "Blogger",
       },
       rating: {
         type: mongoose.Types.Decimal128,
       },
       reviewer_id: {
         type: mongoose.Types.ObjectId,
-        ref: "User",
+        ref: "Blogger",
       },
     },
   ],
   uploader_id: {
     type: mongoose.Types.ObjectId,
-    ref: "User",
+    ref: "Blogger",
+  },
+  blog_pic: {
+    type: String,
+  },
+  content: {
+    type: String,
+  },
+  heading: {
+    type: String,
+  },
+  sub_heading: {
+    type: String,
   },
 });
 
-module.exports = mongoose.model("Post", postSchema);
+module.exports = mongoose.model("Blog", blogSchema);

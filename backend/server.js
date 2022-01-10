@@ -8,6 +8,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
+const path = require("path");
 
 //swagger
 const swaggerOption = require("./app/config/swagger.config");
@@ -16,6 +17,7 @@ const swaggerUi = require("swagger-ui-express");
 
 //routes
 const userRoutes = require("./app/routes/user.routes");
+const authRoutes = require("./app/routes/auth.routes");
 
 const app = express();
 
@@ -60,7 +62,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //public folder
-app.use("/public", express.static("./app/public"));
+app.use("/public", express.static(path.join(__dirname, "./app/public")));
 
 //swagger-jsdoc init
 const openApiSpecification = swaggerJsdoc(swaggerOption);
@@ -71,11 +73,13 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 //Routes
 app.use("/api/user", userRoutes);
 
+app.use("/api/auth", authRoutes);
+
 app.get("/", (req, res) => {
   res.send("Welcome to blog app");
 });
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log(`Port Listening on ${PORT}`);
