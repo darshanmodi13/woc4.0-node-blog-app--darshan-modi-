@@ -28,6 +28,7 @@ exports.isNotLoggedIn = (req, res, next) => {
       return response.badRequestResponse(res, "User Already Logged In.");
     }
     next();
+    return;
   } catch (error) {
     return response.serverErrorResponse(res, "Server Error.");
   }

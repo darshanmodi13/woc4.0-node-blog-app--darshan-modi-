@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const fs = require("fs");
 const path = require("path");
+const jwt = require("jsonwebtoken");
 //Model
 const Blogger = require("../models").Blogger;
 
@@ -10,18 +11,17 @@ const response = require("../utils/responses");
 //validation
 const createUserValidation = require("../validation/createBlogger.validation");
 
-//helper
-const bufferToStream = require("../utils/helper").bufferToStream;
-
 exports.create = async (req, res) => {
   try {
-    let user = await Blogger.findOne({ email: req.body.email });
+    let user = await Blogger.findOne({
+      $or: [{ email: req.body.email }, { user_name: req.body.user_name }],
+    });
 
     if (user) {
       return response.badRequestResponse(
         res,
         {},
-        "Email Already Registered With Bloggr.com"
+        "Email Or User Name Already Registered With Bloggr.com"
       );
     }
 
@@ -56,5 +56,34 @@ exports.create = async (req, res) => {
   } catch (error) {
     console.log(error);
     response.serverErrorResponse(res, "Server Error.");
+  }
+
+};
+
+exports.signin = async (req, res) => {
+  try {
+    if (!req.body.password || !req.body.user_name) {
+      return response.badRequestResponse(res, "All fields required.");
+    }
+    let user = await Blogger.findOne({ user_name: req.body.user_name });
+    if (!user) {
+      return response.notFoundResponse(res, "User Not Found.");
+    }
+    let is_matched = await bcrypt.compareSync(req.body.password, user.password);
+    if (!is_matched) {
+      return response.unauthorizedResponse(res, "Password Invalid.");
+    }
+    let token = await jwt.sign({ id: user._id }, process.env.SECRET, {
+      expiresIn: "1d",
+    });
+
+    let { password, ...user_data } = user._doc;
+    return response.successResponse(
+      res,
+      { token, ...user_data },
+      "User Logged In Successfully."
+    );
+  } catch (error) {
+    return response.serverErrorResponse(res, "Server Error.");
   }
 };

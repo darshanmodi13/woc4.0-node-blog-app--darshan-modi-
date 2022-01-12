@@ -129,4 +129,56 @@ router.use((req, res, next) => {
 
 router.post("/create", [auth.isNotLoggedIn], controller.create);
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     signin_schema:
+ *       type: object
+ *       required:
+ *         - password
+ *         - user_name
+ *       properties:
+ *           password:
+ *             type: string
+ *             description : User' Password
+ *             example: "abcd"
+ *           user_name:
+ *             type: string
+ *             description : User' user name
+ *             example: "john_dev"
+ */
+
+/**
+ * @swagger
+ * /api/auth/signin:
+ *   post:
+ *     tags : [Auth]
+ *     description : User Login
+ *     summary: User Login
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/signin_schema'
+ *     responses:
+ *       201:
+ *         description: Blogger Added Successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/success_response'
+ *       400:
+ *         description: Validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/validation_response'
+ *       404:
+ *         description: Not found
+ */
+
+router.post("/signin", [auth.isNotLoggedIn], controller.signin);
+
 module.exports = router;
