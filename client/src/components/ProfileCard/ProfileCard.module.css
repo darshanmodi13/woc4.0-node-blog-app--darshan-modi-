@@ -1,0 +1,26 @@
+.username {
+  font-size: 1.2rem;
+  font-family: var(--username);
+  margin-left: 3%;
+}
+
+.profileContainer {
+  width: 90%;
+  min-height: 200px;
+}
+.img {
+  border: 1px solid transparent;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+.profileDataContainer > p {
+  font-size: 1.2rem;
+}
+.bio,
+.website {
+  font-size: 13px;
+}
+.bio {
+  letter-spacing: 1px;
+}

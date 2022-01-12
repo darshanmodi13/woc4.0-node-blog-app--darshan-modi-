@@ -1,0 +1,30 @@
+.username {
+  font-family: "Dancing Script", cursive;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.date {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+}
+.card {
+  width: 30%;
+}
+
+.header {
+  font-family: "montserrat", "Sans-serif";
+  font-size: 0.9rem;
+  word-wrap: break-word;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+.cardText {
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.wrap {
+  white-space: nowrap;
+}

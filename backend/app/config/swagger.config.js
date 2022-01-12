@@ -9,8 +9,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:3001",
+      url: "http://localhost:8080",
       description: "Development server",
+    },
+    {
+      url: "https://woc4-darshan-modi.herokuapp.com",
+      description: "Testing Server",
     },
   ],
   tags: [
