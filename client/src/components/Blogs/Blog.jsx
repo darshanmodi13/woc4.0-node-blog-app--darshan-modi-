@@ -1,9 +1,15 @@
 import React from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 //css
 import styles from "./Blog.module.css";
 
 const Blog = () => {
+  let location = useHistory();
+
+  let gotoBlog = () => {
+    location.push(`/blog/view/${101}`);
+  };
   return (
     <>
       <div className="card">
@@ -11,12 +17,16 @@ const Blog = () => {
           alt="abc"
           src={`${"https://picsum.photos/350/200"}`}
           style={{ height: "350px" }}
+          onClick={gotoBlog}
         />
         <div className="card-body">
-          <p className={`card-title ${styles.header}`}>
+          <p className={`card-title ${styles.header}`} onClick={gotoBlog}>
             HOW TO SPEND A WEEKEND IN SPAIN
           </p>
-          <p className={`card-text ${styles.cardText} ${styles.wrap}`}>
+          <p
+            className={`card-text ${styles.cardText} ${styles.wrap}`}
+            onClick={gotoBlog}
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
             efficitur sem dui, a porttitor elit consectetur in. Duis lacinia leo
             id tortor euismod scelerisque. Pellentesque tempor accumsan nisl,
@@ -40,7 +50,14 @@ const Blog = () => {
           <div className="row">
             <div className={`col-4 ${styles.date}`}>12/1/2021</div>
             <div className="col-4"></div>
-            <div className={`col-4 ${styles.username}`}>@john_dev</div>
+            <div
+              className={`col-4 ${styles.username}`}
+              onClick={() => {
+                console.log("Hii");
+              }}
+            >
+              @john_dev
+            </div>
           </div>
         </div>
       </div>

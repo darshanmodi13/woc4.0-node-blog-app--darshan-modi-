@@ -7,7 +7,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: "roboto", sans-serif;
+  font-family: "Montserrat", sans-serif;
   max-width: 95vw;
 }
 .page-container {
@@ -17,7 +17,6 @@
 body {
   background-color: var(--bg);
   color: var(--font);
-  font-family: montserrat, "sans-serif";
 }
 
 button {

@@ -13,6 +13,7 @@ import RestricatedRoutes from "./utils/Routes/RestricatedRoutes";
 import Home from "./pages/Home/Home";
 import Signin from "./pages/Signin&Register/Signin";
 import Profile from "./pages/Profile/Profile";
+import ViewBlog from "./pages/ViewBlog/ViewBlog";
 
 const isLogin = Cookies.get("token") ? true : false;
 
@@ -22,6 +23,12 @@ const App = () => {
       <div className="page-container">
         <Switch>
           <PrivateRoute component={Home} isLogin={isLogin} path="/" exact />
+          <PrivateRoute
+            component={ViewBlog}
+            isLogin={isLogin}
+            path="/blog/view/:post_id"
+            exact
+          />
           <PrivateRoute
             component={Profile}
             isLogin={isLogin}
