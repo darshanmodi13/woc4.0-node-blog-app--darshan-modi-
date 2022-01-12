@@ -1,0 +1,38 @@
+:root {
+  --bg: #fff;
+  --font: #000000a6;
+  --button: #90aacb;
+  --username: "Dancing Script", cursive;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: "roboto", sans-serif;
+  max-width: 95vw;
+}
+.page-container {
+  width: 100vw;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--font);
+  font-family: montserrat, "sans-serif";
+}
+
+button {
+  background-color: var(--button);
+  border: none;
+  text-align: center;
+  color: #fff;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 32% 32% 32%;
+  grid-gap: 2rem;
+}
+
+.card {
+  cursor: pointer;
+}
