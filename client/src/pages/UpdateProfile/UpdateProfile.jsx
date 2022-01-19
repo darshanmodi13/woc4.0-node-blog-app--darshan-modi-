@@ -1,13 +1,13 @@
 import React from "react";
 
-//Component
+//Components
 import Navbar from "../../components/Navbar/Navbar";
-import BlogPage from "../../components/BlogPage/BlogPage";
+import UpdateProfileComponent from "../../components/UpdateProfile/UpdateProfileComponent";
 
-const ViewBlog = () => {
+const UpdateProfile = () => {
   return (
     <>
-      <div className="row ml-5 mb-5">
+      <div className="row ml-5">
         <div
           className="col-2"
           style={{
@@ -20,11 +20,11 @@ const ViewBlog = () => {
           </div>
         </div>
         <div className="col-10">
-          <BlogPage />
+          <UpdateProfileComponent />
         </div>
       </div>
     </>
   );
 };
 
-export default ViewBlog;
+export default UpdateProfile;

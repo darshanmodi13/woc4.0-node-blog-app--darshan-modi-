@@ -23,6 +23,10 @@ const blogSchema = new mongoose.Schema({
     type: mongoose.Types.ObjectId,
     ref: "Blogger",
   },
+  category_id: {
+    type: mongoose.Types.ObjectId,
+    ref: "Category",
+  },
   blog_pic: {
     type: String,
   },
@@ -34,6 +38,10 @@ const blogSchema = new mongoose.Schema({
   },
   sub_heading: {
     type: String,
+  },
+  date: {
+    type: Date,
+    default: Date.now(),
   },
 });
 

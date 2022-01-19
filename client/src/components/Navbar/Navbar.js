@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 //css
 import styles from "./Navbar.module.css";
+import url from "../../utils/url";
 
+const user_id = Cookies.get("user_id");
 const Navbar = () => {
+  let [users, setUsers] = useState([]);
+  let [text, setText] = useState("");
+  let search = async (e) => {
+    setText(e.target.value);
+
+    let res = await axios.get(
+      `${url}/api/user/list?limit=5&username=${e.target.value}`,
+      {
+        withCredentials: true,
+      }
+    );
+    setUsers(res.data.data);
+  };
   return (
     <>
       <nav>
@@ -49,7 +66,7 @@ const Navbar = () => {
               </Link>
             </li> */}
             <li className={`navbar-nav ${styles.li} mt-3`}>
-              <Link to="/profile" className={`${styles.link}`}>
+              <Link to={`/profile/${user_id}`} className={`${styles.link}`}>
                 Profile
               </Link>
             </li>
@@ -60,7 +77,21 @@ const Navbar = () => {
             type={"text"}
             style={{ width: "175px" }}
             placeholder="Search Blogger..."
+            onChange={search}
+            value={text}
           />
+          <ul
+            style={{
+              listStyle: "none",
+              marginTop: "1%",
+              width: "100%",
+              marginLeft: "-2%",
+            }}
+          >
+            {users.map((u, index) => {
+              return <List key={index} user={u} />;
+            })}
+          </ul>
         </div>
       </nav>
     </>
@@ -68,3 +99,23 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+const List = (props) => {
+  return (
+    <>
+      <li
+        style={{
+          width: "100%",
+          padding: "10px",
+        }}
+      >
+        <Link
+          to={`/profile/${props.user._id}`}
+          style={{ textDecoration: "none" }}
+        >
+          {props.user.user_name}
+        </Link>
+      </li>
+    </>
+  );
+};

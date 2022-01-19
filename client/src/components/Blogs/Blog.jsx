@@ -13,6 +13,34 @@ const Blog = () => {
   return (
     <>
       <div className="card">
+        <div className="row ml-1 mt-1 mb-1">
+          <div
+            className={`col-4 ${styles.username}`}
+            onClick={() => {
+              console.log("Hii");
+            }}
+          >
+            @john_dev
+          </div>
+          <div className="col-3"></div>
+          <div
+            className="col-5"
+            style={{ textAlign: "center", fontSize: "11px" }}
+          >
+            <button
+              className="followbtn"
+              style={{ padding: "5px" }}
+              onClick={() => {
+                let text = document.querySelector(".followbtn").textContent;
+                if (text === "Follow") text = "Following";
+                else text = "Follow";
+                document.querySelector(".followbtn").textContent = text;
+              }}
+            >
+              Follow{" "}
+            </button>
+          </div>
+        </div>
         <img
           alt="abc"
           src={`${"https://picsum.photos/350/200"}`}
@@ -50,14 +78,6 @@ const Blog = () => {
           <div className="row">
             <div className={`col-4 ${styles.date}`}>12/1/2021</div>
             <div className="col-4"></div>
-            <div
-              className={`col-4 ${styles.username}`}
-              onClick={() => {
-                console.log("Hii");
-              }}
-            >
-              @john_dev
-            </div>
           </div>
         </div>
       </div>

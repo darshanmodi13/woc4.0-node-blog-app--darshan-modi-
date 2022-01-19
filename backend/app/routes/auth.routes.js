@@ -181,4 +181,7 @@ router.post("/create", [auth.isNotLoggedIn], controller.create);
 
 router.post("/signin", [auth.isNotLoggedIn], controller.signin);
 
+router.get("/test", (req, res) => {
+  res.end("Auth test");
+});
 module.exports = router;

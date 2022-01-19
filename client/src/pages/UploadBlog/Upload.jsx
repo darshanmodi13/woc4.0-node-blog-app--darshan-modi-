@@ -1,13 +1,11 @@
 import React from "react";
-
-//Component
 import Navbar from "../../components/Navbar/Navbar";
-import BlogPage from "../../components/BlogPage/BlogPage";
+import UploadBlogComponent from "../../components/UploadBlog/UploadBlogComponent";
 
-const ViewBlog = () => {
+const Upload = () => {
   return (
     <>
-      <div className="row ml-5 mb-5">
+      <div className="row ml-5">
         <div
           className="col-2"
           style={{
@@ -20,11 +18,11 @@ const ViewBlog = () => {
           </div>
         </div>
         <div className="col-10">
-          <BlogPage />
+          <UploadBlogComponent />
         </div>
       </div>
     </>
   );
 };
 
-export default ViewBlog;
+export default Upload;

@@ -9,6 +9,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
+const bodyParser = require("body-parser");
 
 //swagger
 const swaggerOption = require("./app/config/swagger.config");
@@ -18,6 +19,7 @@ const swaggerUi = require("swagger-ui-express");
 //routes
 const userRoutes = require("./app/routes/user.routes");
 const authRoutes = require("./app/routes/auth.routes");
+const categoryRoutes = require("./app/routes/category.routes");
 
 const app = express();
 
@@ -59,11 +61,13 @@ app.use(function (req, res, next) {
 });
 
 // parse requests of content-type - application/json
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
+//Set File Limit
+app.use(bodyParser.json({ limit: "50mb" }));
 //parse cookies
 app.use(cookieParser());
 
@@ -80,6 +84,8 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(openApiSpecification));
 app.use("/api/user", userRoutes);
 
 app.use("/api/auth", authRoutes);
+
+app.use("/api/category", categoryRoutes);
 
 app.get("/", (req, res) => {
   res.send("Welcome to blog app");

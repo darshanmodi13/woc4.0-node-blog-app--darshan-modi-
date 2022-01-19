@@ -14,6 +14,8 @@ import Home from "./pages/Home/Home";
 import Signin from "./pages/Signin&Register/Signin";
 import Profile from "./pages/Profile/Profile";
 import ViewBlog from "./pages/ViewBlog/ViewBlog";
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import Upload from "./pages/UploadBlog/Upload";
 
 const isLogin = Cookies.get("token") ? true : false;
 
@@ -32,7 +34,19 @@ const App = () => {
           <PrivateRoute
             component={Profile}
             isLogin={isLogin}
-            path="/profile"
+            path="/profile/:id"
+            exact
+          />
+          <PrivateRoute
+            component={UpdateProfile}
+            isLogin={isLogin}
+            path="/update-profile"
+            exact
+          />
+          <PrivateRoute
+            component={Upload}
+            isLogin={isLogin}
+            path="/upload"
             exact
           />
           <RestricatedRoutes
