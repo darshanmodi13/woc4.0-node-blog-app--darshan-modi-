@@ -32,7 +32,7 @@ const bloggerSchema = new mongoose.Schema({
   },
   followers: [
     {
-      follower_id: {
+      id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Blogger",
       },
@@ -40,7 +40,7 @@ const bloggerSchema = new mongoose.Schema({
   ],
   following: [
     {
-      following_id: {
+      id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Blogger",
       },

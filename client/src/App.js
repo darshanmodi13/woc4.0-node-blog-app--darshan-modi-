@@ -16,6 +16,7 @@ import Profile from "./pages/Profile/Profile";
 import ViewBlog from "./pages/ViewBlog/ViewBlog";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 import Upload from "./pages/UploadBlog/Upload";
+import BlogPage from "./pages/BlogPage/BlogPage";
 
 const isLogin = Cookies.get("token") ? true : false;
 
@@ -29,6 +30,12 @@ const App = () => {
             component={ViewBlog}
             isLogin={isLogin}
             path="/blog/view/:post_id"
+            exact
+          />
+          <PrivateRoute
+            component={BlogPage}
+            isLogin={isLogin}
+            path="/blog"
             exact
           />
           <PrivateRoute
@@ -49,6 +56,12 @@ const App = () => {
             path="/upload"
             exact
           />
+          <PrivateRoute
+            component={Logout}
+            isLogin={isLogin}
+            path="/logout"
+            exact
+          />
           <RestricatedRoutes
             component={Signin}
             isLogin={isLogin}
@@ -62,3 +75,9 @@ const App = () => {
 };
 
 export default App;
+
+const Logout = () => {
+  Cookies.remove("token");
+  Cookies.remove("user_id");
+  window.location.href = "/signin";
+};

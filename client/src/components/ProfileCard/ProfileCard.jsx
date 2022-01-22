@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import url from "../../utils/url";
-import axios from "axios";
 import Cookies from "js-cookie";
 //css
 import styles from "./ProfileCard.module.css";
@@ -13,30 +11,23 @@ import ProfileMenu from "../ProfileMenu/ProfileMenu";
 
 const user_id = Cookies.get("user_id");
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
   const [isUser, setIsUser] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState({});
   const [posts, setPosts] = useState([]);
   const params = useParams();
   useEffect(() => {
-    getUser();
+    setUser(props.user_data.user);
+    setPosts(props.user_data.posts);
     setIsUser(params.id === user_id);
   }, [params.id]);
 
-  const getUser = async () => {
-    let res = await axios.get(`${url}/api/user/${params.id}`, {
-      withCredentials: true,
-    });
-    setUser(res.data.data.user);
-    setPosts(res.data.data.posts);
-  };
-
   return (
     <>
-      {user ? (
+      {Object.keys(user).length !== 0 ? (
         <>
           <div className="row">
-            <div className={`${styles.username} col-2`}>@john_dev</div>
+            <div className={`${styles.username} col-2`}>@{user.user_name}</div>
             <div className="col-6"></div>
             <div className={`col-3 ${styles.add}`}>
               <p style={{ textAlign: "right" }}>

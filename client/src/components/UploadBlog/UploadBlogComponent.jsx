@@ -7,7 +7,7 @@ import styles from "./style.module.css";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 const user_id = Cookies.get("user_id");
-const UploadBlogComponent = () => {
+const UploadBlogComponent = ({ post_id }) => {
   const [img, setImg] = useState();
   const [imgBuffer, setImgBuffer] = useState();
   const location = useHistory();
@@ -20,7 +20,9 @@ const UploadBlogComponent = () => {
   const [category, setCategory] = useState([]);
 
   useEffect(() => {
+    getData();
     getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   let uploadImg = (e) => {
     setImg(URL.createObjectURL(e.target.files[0]));
@@ -33,6 +35,21 @@ const UploadBlogComponent = () => {
     reader.readAsDataURL(file);
     reader.onload = () => cb(reader.result);
     reader.onerror = () => console.log("Erorr");
+  };
+  let getData = async () => {
+    if (post_id) {
+      let res = await axios.get(`${url}/api/user/post/${post_id}`, {
+        withCredentials: true,
+      });
+
+      setData({
+        header: res.data.data.post.heading,
+        sub_header: res.data.data.post.sub_heading,
+        content: res.data.data.post.content,
+        category: res.data.data.post.category_id,
+      });
+      setImg(`${url}/public/${res.data.data.post.blog_pic}`);
+    }
   };
   let inputChange = (e) => {
     setData((oldData) => {
@@ -139,6 +156,7 @@ const UploadBlogComponent = () => {
                   padding: "7px",
                 }}
                 name="category"
+                defaultValue={data.category}
                 onChange={inputChange}
               >
                 <option value="">---Select---</option>

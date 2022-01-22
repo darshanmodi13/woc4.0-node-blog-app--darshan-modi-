@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -11,9 +11,13 @@ const user_id = Cookies.get("user_id");
 const Navbar = () => {
   let [users, setUsers] = useState([]);
   let [text, setText] = useState("");
+  let [category, setCategory] = useState([]);
+
+  useEffect(() => {
+    getCategory();
+  }, []);
   let search = async (e) => {
     setText(e.target.value);
-
     let res = await axios.get(
       `${url}/api/user/list?limit=5&username=${e.target.value}`,
       {
@@ -21,6 +25,12 @@ const Navbar = () => {
       }
     );
     setUsers(res.data.data);
+  };
+  let getCategory = async () => {
+    let res = await axios.get(`${url}/api/category/list`, {
+      withCredentials: true,
+    });
+    setCategory(res.data.data);
   };
   return (
     <>
@@ -51,13 +61,18 @@ const Navbar = () => {
                 Category
               </div>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <Link to="/pages" className={`${styles.link}`}>
-                  Sports
-                </Link>
-                <br />
-                <Link to="/pages" className={`${styles.link}`}>
-                  Wildlife
-                </Link>
+                {category.map((c, i) => {
+                  return (
+                    <Link
+                      to={`/blog?category_id=${c._id}`}
+                      className={`${styles.link} ml-2`}
+                      key={i}
+                    >
+                      {c.name}
+                      <br />
+                    </Link>
+                  );
+                })}
               </div>
             </li>
             {/* <li className={`navbar-nav ${styles.li} mt-3`}>
@@ -68,6 +83,11 @@ const Navbar = () => {
             <li className={`navbar-nav ${styles.li} mt-3`}>
               <Link to={`/profile/${user_id}`} className={`${styles.link}`}>
                 Profile
+              </Link>
+            </li>
+            <li className={`navbar-nav ${styles.li} mt-3`}>
+              <Link to={`/logout`} className={`${styles.link}`}>
+                Logout
               </Link>
             </li>
           </ul>

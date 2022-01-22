@@ -1,14 +1,34 @@
 import React from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-
+import UpdateDeleteMenu from "../UpdateAndDelete/UpdateDeleteMenu";
 //css
 import styles from "./Blog.module.css";
+import url from "../../utils/url";
+import axios from "axios";
 
-const Blog = () => {
+const Blog = ({ post, user, isUser }) => {
   let location = useHistory();
 
-  let gotoBlog = () => {
-    location.push(`/blog/view/${101}`);
+  let gotoBlog = (id) => {
+    location.push(`/blog/view/${id}`);
+  };
+
+  let followbtnClick = async (e) => {
+    if (e.target.innerHTML === "Follow") {
+      await axios.put(
+        `${url}/api/user/follow`,
+        { user },
+        { withCredentials: true }
+      );
+      e.target.innerHTML = "Following";
+    } else {
+      await axios.put(
+        `${url}/api/user/unfollow`,
+        { user },
+        { withCredentials: true }
+      );
+      e.target.innerHTML = "Follow";
+    }
   };
   return (
     <>
@@ -17,66 +37,61 @@ const Blog = () => {
           <div
             className={`col-4 ${styles.username}`}
             onClick={() => {
-              console.log("Hii");
+              location.push(`/profile/${user._id}`);
             }}
           >
-            @john_dev
+            @{user.user_name}
           </div>
           <div className="col-3"></div>
+
           <div
             className="col-5"
             style={{ textAlign: "center", fontSize: "11px" }}
           >
-            <button
-              className="followbtn"
-              style={{ padding: "5px" }}
-              onClick={() => {
-                let text = document.querySelector(".followbtn").textContent;
-                if (text === "Follow") text = "Following";
-                else text = "Follow";
-                document.querySelector(".followbtn").textContent = text;
-              }}
-            >
-              Follow{" "}
-            </button>
+            {!isUser ? (
+              <button
+                className="followbtn"
+                style={{ padding: "5px", textTransform: "capitalize" }}
+                onClick={followbtnClick}
+              >
+                {user.followers.length !== 0 ? "Following" : "Follow"}
+              </button>
+            ) : (
+              <UpdateDeleteMenu post_id={post._id} />
+            )}
           </div>
         </div>
         <img
           alt="abc"
-          src={`${"https://picsum.photos/350/200"}`}
+          src={`${url}/public/${post.blog_pic}`}
           style={{ height: "350px" }}
-          onClick={gotoBlog}
+          onClick={() => {
+            gotoBlog(post._id);
+          }}
         />
         <div className="card-body">
-          <p className={`card-title ${styles.header}`} onClick={gotoBlog}>
-            HOW TO SPEND A WEEKEND IN SPAIN
+          <p
+            className={`card-title ${styles.header}`}
+            onClick={() => {
+              gotoBlog(post._id);
+            }}
+          >
+            {post.heading}
           </p>
           <p
             className={`card-text ${styles.cardText} ${styles.wrap}`}
-            onClick={gotoBlog}
+            onClick={() => {
+              gotoBlog(post._id);
+            }}
           >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-            efficitur sem dui, a porttitor elit consectetur in. Duis lacinia leo
-            id tortor euismod scelerisque. Pellentesque tempor accumsan nisl,
-            eget elementum nibh dapibus id. Mauris pharetra libero lacus. Class
-            aptent taciti sociosqu ad litora torquent per conubia nostra, per
-            inceptos himenaeos. In sed ultricies mi, et iaculis nulla. Cras
-            vestibulum justo sit amet posuere ornare. Phasellus vitae nisi
-            tempor risus rhoncus consequat at id leo. Maecenas non mattis justo.
-            Morbi faucibus tempus felis a blandit. Fusce fermentum tellus nec
-            magna laoreet, ac laoreet mauris lacinia. Integer tincidunt luctus
-            auctor. Nulla fermentum dui augue, non iaculis tortor facilisis eu.
-            Etiam vestibulum eros quis eros tristique pellentesque. Maecenas
-            libero metus, porttitor eu fringilla eu, euismod sit amet ex.
-            Phasellus et pharetra tellus, et hendrerit magna. Etiam quis sodales
-            urna. Cras vitae congue neque, sit amet pharetra erat. Nunc
-            molestie, magna sit amet ornare vulputate, mauris tellus auctor
-            mauris, quis mattis mi ex vel mi. Morbi erat justo, sodales eu ante
-            accumsan, faucibus auctor turpis. Lorem ipsum dolor sit amet,
-            consectetur adipiscing elit. Etiam non quam quam.
+            {post.sub_heading}
           </p>
           <div className="row">
-            <div className={`col-4 ${styles.date}`}>12/1/2021</div>
+            <div className={`col-4 ${styles.date}`}>{`${new Date(
+              post.date
+            ).getDate()}-${new Date(post.date).getMonth() + 1}-${new Date(
+              post.date
+            ).getFullYear()}`}</div>
             <div className="col-4"></div>
           </div>
         </div>
